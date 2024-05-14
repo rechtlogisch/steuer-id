@@ -1,0 +1,11 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Property Rechtlogisch\\\\SteuerId\\\\SteuerId\\:\\:\\$input \\(string\\) does not accept string\\|null\\.$#"
+			count: 1
+			path: src/SteuerId.php
+
+		-
+			message: "#^Call to an undefined method Pest\\\\PendingCalls\\\\TestCall\\|Pest\\\\Support\\\\HigherOrderTapProxy\\:\\:expect\\(\\)\\.$#"
+			count: 3
+			path: tests/ArchTest.php
