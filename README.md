@@ -85,7 +85,7 @@ Please see [CONTRIBUTING](https://github.com/rechtlogisch/.github/blob/main/CONT
 
 ## Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+If you discover any security-related issues, please email open-source@rechtlogisch.de instead of using the issue tracker.
 
 ## Credits
 
