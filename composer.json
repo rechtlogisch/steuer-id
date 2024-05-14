@@ -3,6 +3,7 @@
     "description": "Validates the German Tax-ID (Steuerliche Identifikationsnummer)",
     "keywords": [
         "rechtlogisch",
+        "tax-id",
         "steuer-id",
         "steuerliche identifikationsnummer",
         "germany"
