@@ -67,7 +67,7 @@ use Rechtlogisch\SteuerId\SteuerId;
     ->getErrors(); // => ['Only digits allowed.']
 ```
 
-Hint: `validateSteuerId('...')` and `(new SteuerId('...')->validate()` return a `ValidationResult::class` object.
+Hint: `validateSteuerId('...')` and `(new SteuerId('...'))->validate()` return a `ValidationResult::class` object.
 
 ## Testing
 
