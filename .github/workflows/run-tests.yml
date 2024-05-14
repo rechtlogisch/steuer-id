@@ -45,4 +45,4 @@ jobs:
         run: composer show -D
 
       - name: Execute tests
-        run: coverage test
+        run: composer test
