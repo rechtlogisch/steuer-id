@@ -1,7 +1,6 @@
 {
     "name": "rechtlogisch/steuer-id",
     "description": "Validates the German Tax-ID (Steuerliche Identifikationsnummer)",
-    "version": "1.0.0",
     "keywords": [
         "rechtlogisch",
         "steuer-id",
