@@ -13,3 +13,6 @@
 /art export-ignore
 /docs export-ignore
 /UPGRADING.md export-ignore
+/phpstan.neon export-ignore
+/phpstan-baseline.neon export-ignore
+/rechtlogisch-steuer-id-banner.png export-ignore
