@@ -2,6 +2,12 @@
 
 All notable changes to `steuer-id` will be documented in this file.
 
+## v1.0.1 - 2024-05-14
+
+- Small improvements and fixes
+
+**Full Changelog**: https://github.com/rechtlogisch/steuer-id/compare/v1.0.0...v1.0.1
+
 ## v1.0.0 - 2024-05-14
 
 - Validates German (test) Tax-IDs
