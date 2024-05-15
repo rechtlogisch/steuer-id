@@ -56,8 +56,10 @@ it('throws a type error when null provided as steuer-id', function () {
 })->throws(TypeError::class);
 
 it('does not throw a type error when int provided as steuer-id', function () {
+    // PHP casts int to string due to the type hint in class constructor
+    // https://www.php.net/manual/en/language.types.string.php#language.types.string.casting
     /** @phpstan-ignore-next-line */
-    $result = (new SteuerId(12345678911))->validate(); // levering type juggling
+    $result = (new SteuerId(12345678911))->validate();
 
     expect($result->isValid())->toBeTrue()
         ->and($result->getErrors())->toBeEmpty();
