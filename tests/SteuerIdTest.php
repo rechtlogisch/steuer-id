@@ -1,5 +1,6 @@
 <?php
 
+use Rechtlogisch\SteuerId\Exceptions;
 use Rechtlogisch\SteuerId\SteuerId;
 
 beforeEach(function () {
@@ -20,12 +21,12 @@ it('returns true for a valid steuer-id', function (string $steuerId) {
         ->and($result->getErrors())->toBeEmpty();
 })->with('valid');
 
-it('returns true for a valid steuer-id with spaces', function (string $steuerId) {
+it('returns false for a valid steuer-id with spaces', function (string $steuerId) {
     $result = (new SteuerId($steuerId))->validate();
 
-    expect($result->isValid())->toBeTrue()
-        ->and($result->getErrors())->toBeEmpty();
-})->with('valid-with-spaces');
+    expect($result->isValid())->toBeFalse()
+        ->and($result->getErrors())->not->toBeEmpty();
+})->with('valid-but-with-spaces-therefore-invalid');
 
 it('returns false for an invalid steuer-id', function (string $steuerId) {
     $result = (new SteuerId($steuerId))->validate();
@@ -69,21 +70,21 @@ it('returns false and specific error message when non-digits provided', function
     $result = (new SteuerId('a'))->validate();
 
     expect($result->isValid())->toBeFalse()
-        ->and($result->getErrors()[0] ?? null)->toContain('Only digits are allowed.');
+        ->and($result->getFirstErrorKey())->toContain(Exceptions\SteuerIdCanContainOnlyDigits::class);
 });
 
 it('returns false and specific error message when empty input provided', function () {
     $result = (new SteuerId(''))->validate();
 
     expect($result->isValid())->toBeFalse()
-        ->and($result->getErrors()[0] ?? null)->toContain('Please provide a non-empty input as Steuer-ID.');
+        ->and($result->getFirstErrorKey())->toContain(Exceptions\InputEmpty::class);
 });
 
 it('returns false and specific error message when input to short', function (string $steuerId) {
     $result = (new SteuerId($steuerId))->validate();
 
     expect($result->isValid())->toBeFalse()
-        ->and($result->getErrors()[0] ?? null)->toContain('Steuer-ID must be 11 digits long.');
+        ->and($result->getFirstErrorKey())->toContain(Exceptions\InvalidSteuerIdLength::class);
 })->with([
     '1',
     '1234567890',
@@ -94,7 +95,7 @@ it('returns false and specific error message when a test steuer-id is provided o
     $result = (new SteuerId('02476291358'))->validate();
 
     expect($result->isValid())->toBeFalse()
-        ->and($result->getErrors()[0] ?? null)->toContain('Test Steuer-IDs (first digit `0`) are not allowed.');
+        ->and($result->getFirstErrorKey())->toContain(Exceptions\TestSteuerIdNotSupported::class);
 });
 
 it('returns true when a test steuer-id is provided on non-production', function () {
@@ -109,14 +110,14 @@ it('returns false and specific error message when a steuer-id does not contain a
     $result = (new SteuerId('12345678901'))->validate();
 
     expect($result->isValid())->toBeFalse()
-        ->and($result->getErrors()[0] ?? null)->toContain('Inputted Steuer-ID must contain one repeated digit.');
+        ->and($result->getFirstErrorKey())->toContain(Exceptions\InvalidRepeatedDigit::class);
 });
 
 it('returns false and specific error message when a steuer-id does contain more than one repeated digits', function (string $steuerId) {
     $result = (new SteuerId($steuerId))->validate();
 
     expect($result->isValid())->toBeFalse()
-        ->and($result->getErrors()[0] ?? null)->toContain('Inputted Steuer-ID must contain one repeated digit.');
+        ->and($result->getFirstErrorKey())->toContain(Exceptions\InvalidRepeatedDigit::class);
 })->with([
     '12123456789',
     '11111222223',
@@ -126,7 +127,7 @@ it('returns false and specific error message an exception when a steuer-id conta
     $result = (new SteuerId($steuerId))->validate();
 
     expect($result->isValid())->toBeFalse()
-        ->and($result->getErrors()[0] ?? null)->toContain('One digit must be repeated two or three times as a constraint.');
+        ->and($result->getFirstErrorKey())->toContain(Exceptions\InvalidRepeatsCount::class);
 })->with([
     '12131415678',
     '99999999999',
@@ -136,7 +137,7 @@ it('returns false and specific error message when a steuer-id contains an invali
     $result = (new SteuerId($steuerId))->validate();
 
     expect($result->isValid())->toBeFalse()
-        ->and($result->getErrors()[0] ?? null)->toContain('can\'t build a consecutive chain of three repeated digits.');
+        ->and($result->getFirstErrorKey())->toContain(Exceptions\InvalidChainOfDigits::class);
 })->with([
     '12345678111',
     '99912345678',
@@ -150,7 +151,7 @@ it('does not throw an exception when a steuer-id contains chain of two digits', 
     if ($error === null) {
         expect($result->getErrors())->toBeEmpty();
     } else {
-        expect($result->getErrors()[0] ?? null)->toBe($error);
+        expect($result->getFirstError())->toContain($error);
     }
 })->with([
     ['12345678911', null],
