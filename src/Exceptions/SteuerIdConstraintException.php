@@ -6,6 +6,4 @@ namespace Rechtlogisch\SteuerId\Exceptions;
 
 use RuntimeException;
 
-class SteuerIdConstraintException extends RuntimeException
-{
-}
+class SteuerIdConstraintException extends RuntimeException {}

@@ -4,6 +4,4 @@ declare(strict_types=1);
 
 namespace Rechtlogisch\SteuerId\Exceptions;
 
-class SteuerIdCanContainOnlyDigits extends SteuerIdConstraintException
-{
-}
+class SteuerIdCanContainOnlyDigits extends SteuerIdConstraintException {}
