@@ -51,7 +51,7 @@ class SteuerId
         $this->removeWhitespaces();
 
         if (! ctype_digit($this->input)) {
-            throw new Exceptions\SteuerIdCanContainOnlyDigits('Only digits allowed.');
+            throw new Exceptions\SteuerIdCanContainOnlyDigits('Only digits are allowed.');
         }
 
         $this->filter();
@@ -87,7 +87,7 @@ class SteuerId
         $firstTenDigits = substr($this->input, 0, self::LENGTH_STEUER_ID - 1);
         $countValues = array_count_values(str_split($firstTenDigits));
 
-        $repeatedDigits = array_filter($countValues, static fn ($item) => $item > 1);
+        $repeatedDigits = array_filter($countValues, static fn (int $item) => $item > 1);
         if (count($repeatedDigits) !== 1) {
             throw new Exceptions\InvalidRepeatedDigit('Inputted Steuer-ID must contain one repeated digit.');
         }

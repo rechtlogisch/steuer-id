@@ -8,7 +8,9 @@
 
 > Validates the German Tax-ID (Steuerliche Identifikationsnummer)
 
-Based on the [official ELSTER documentation](https://download.elster.de/download/schnittstellen/Pruefung_der_Steuer_und_Steueridentifikatsnummer.pdf) (chapter: 2; as of 2024-03-01).
+Based on the [official ELSTER documentation](https://download.elster.de/download/schnittstellen/Pruefung_der_Steuer_und_Steueridentifikatsnummer.pdf) (chapter: 2; as of 2024-06-17).
+
+Hint: This package validates solely the syntax and check digit of the provided input. It does not confirm, that the provided Steuer-ID was assigned to a person. Please contact the [Bundeszentralamt für Steuern](https://www.bzst.de/DE/Privatpersonen/SteuerlicheIdentifikationsnummer/steuerlicheidentifikationsnummer_node.html) in case you are unsure about your Steuer-ID.
 
 ## Installation
 
@@ -38,7 +40,7 @@ Hint: Whitespaces are being ignored.
 
 ### Test-Steuer-IDs
 
-Support for test Steuer-IDs (starting with `0`) is enabled by default. Test Steuer-IDs are usually invalid in production. It is recommended to disable them with the following environment variable:
+Support for test Steuer-IDs (starting with `0`) is enabled by default. Test Steuer-IDs are typically invalid in production. It is recommended to disable them with the following environment variable:
 
 ```bash
 STEUERID_PRODUCTION=true
@@ -55,7 +57,7 @@ putenv('STEUERID_PRODUCTION=true');
 You can get a list of errors explaining why the provided input is invalid with:
 
 ```php
-validateSteuerId('x2476291358')->getErrors(); // => ['Only digits allowed.']
+validateSteuerId('x2476291358')->getErrors(); // => ['Only digits are allowed.']
 ```
 or
 
@@ -64,7 +66,7 @@ use Rechtlogisch\SteuerId\SteuerId;
 
 (new SteuerId('x2476291358'))
     ->validate()
-    ->getErrors(); // => ['Only digits allowed.']
+    ->getErrors(); // => ['Only digits are allowed.']
 ```
 
 Hint: `validateSteuerId('...')` and `(new SteuerId('...'))->validate()` return a `ValidationResult::class` object.
