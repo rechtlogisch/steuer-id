@@ -31,7 +31,7 @@ or
 ```php
 use Rechtlogisch\SteuerId\SteuerId;
 
-(new SteuerId('02 476 291 358'))
+(new SteuerId('02476291358'))
     ->validate() // ValidationResult::class
     ->isValid(); // => true
 ```
