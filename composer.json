@@ -23,6 +23,7 @@
     "require-dev": {
         "laravel/pint": "^1.0",
         "pestphp/pest": "^2.20",
+        "pestphp/pest-plugin-type-coverage": "^2.8",
         "phpstan/phpstan": "^1.11"
     },
     "autoload": {
@@ -40,15 +41,17 @@
     },
     "scripts": {
         "analyse": "vendor/bin/phpstan analyse",
-        "coverage": "vendor/bin/pest --coverage",
+        "coverage": "vendor/bin/pest --coverage --min=98",
         "format": "vendor/bin/pint",
         "quality": [
             "@format",
             "@test",
             "@analyse",
+            "@types",
             "@coverage"
         ],
-        "test": "vendor/bin/pest"
+        "test": "vendor/bin/pest",
+        "types": "vendor/bin/pest --type-coverage --min=100"
     },
     "config": {
         "sort-packages": true,
