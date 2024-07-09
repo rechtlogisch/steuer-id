@@ -69,7 +69,7 @@ it('returns false and specific error message when non-digits provided', function
     $result = (new SteuerId('a'))->validate();
 
     expect($result->isValid())->toBeFalse()
-        ->and($result->getErrors()[0] ?? null)->toContain('Only digits allowed.');
+        ->and($result->getErrors()[0] ?? null)->toContain('Only digits are allowed.');
 });
 
 it('returns false and specific error message when empty input provided', function () {
