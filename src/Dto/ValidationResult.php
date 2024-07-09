@@ -29,8 +29,28 @@ final class ValidationResult
         return $this->errors;
     }
 
-    public function addError(string $error): void
+    public function getFirstErrorKey(): ?string
     {
-        $this->errors[] = $error;
+        return (string) array_key_first($this->errors ?? []);
+    }
+
+    /**
+     * @return array<int|string, string>|null
+     */
+    public function getFirstError(): ?array
+    {
+        $errors = $this->getErrors() ?? [];
+        $firstKey = array_key_first($errors);
+
+        if ($firstKey === null) {
+            return null;
+        }
+
+        return [$firstKey => $errors[$firstKey]];
+    }
+
+    public function addError(string $type, string $error): void
+    {
+        $this->errors[$type] = $error;
     }
 }

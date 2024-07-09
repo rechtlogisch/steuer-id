@@ -36,8 +36,6 @@ use Rechtlogisch\SteuerId\SteuerId;
     ->isValid(); // => true
 ```
 
-Hint: Whitespaces are being ignored.
-
 ### Test-Steuer-IDs
 
 Support for test Steuer-IDs (starting with `0`) is enabled by default. Test Steuer-IDs are typically invalid in production. It is recommended to disable them with the following environment variable:
@@ -54,10 +52,16 @@ putenv('STEUERID_PRODUCTION=true');
 
 ## Validation errors
 
-You can get a list of errors explaining why the provided input is invalid with:
+You can get a list of errors explaining why the provided input is invalid. The `validate()` method returns a DTO with a `getErrors()` method.
+
+Hint: The keys of `getErrors()` hold the stringified reference to the exception class. You can check for a particular error by comparing to the ::class constant. For example: `Rechtlogisch\UstId\Exceptions\InvalidUstIdLength::class`.
 
 ```php
-validateSteuerId('x2476291358')->getErrors(); // => ['Only digits are allowed.']
+validateSteuerId('x2476291358')->getErrors();
+// [
+//   'Rechtlogisch\SteuerId\Exceptions\SteuerIdCanContainOnlyDigits'
+//    => ['Only digits are allowed.']
+// ]
 ```
 or
 
@@ -65,11 +69,13 @@ or
 use Rechtlogisch\SteuerId\SteuerId;
 
 (new SteuerId('x2476291358'))
-    ->validate()
-    ->getErrors(); // => ['Only digits are allowed.']
+    ->validate() // ValidationResult::class
+    ->getErrors();
+// [
+//   'Rechtlogisch\SteuerId\Exceptions\SteuerIdCanContainOnlyDigits'
+//    => ['Only digits are allowed.']
+// ]
 ```
-
-Hint: `validateSteuerId('...')` and `(new SteuerId('...'))->validate()` return a `ValidationResult::class` object.
 
 ## Testing
 

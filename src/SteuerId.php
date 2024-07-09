@@ -21,8 +21,9 @@ class SteuerId
         try {
             $this->guard();
         } catch (Throwable $exception) {
+            $exceptionType = get_class($exception);
             $this->result->setValid(false);
-            $this->result->addError($exception->getMessage());
+            $this->result->addError($exceptionType, $exception->getMessage());
         }
     }
 
@@ -32,11 +33,11 @@ class SteuerId
             return $this->result;
         }
 
-        $hasValidChecksum = substr($this->input, -1) === (string) $this->checkDigit();
+        $hasValidChecksum = mb_substr($this->input, -1) === (string) $this->checkDigit();
         $this->result->setValid($hasValidChecksum);
 
         if ($hasValidChecksum === false) {
-            $this->result->addError('Check digit in the provided Steuer-ID is invalid.');
+            $this->result->addError(Exceptions\InvalidCheckDigit::class, 'Check digit in the provided Steuer-ID is invalid.');
         }
 
         return $this->result;
@@ -48,15 +49,13 @@ class SteuerId
             throw new Exceptions\InputEmpty('Please provide a non-empty input as Steuer-ID.');
         }
 
-        $this->removeWhitespaces();
-
         if (! ctype_digit($this->input)) {
             throw new Exceptions\SteuerIdCanContainOnlyDigits('Only digits are allowed.');
         }
 
         $this->filter();
 
-        if (($lengthInput = strlen($this->input)) !== self::LENGTH_STEUER_ID) {
+        if (($lengthInput = mb_strlen($this->input)) !== self::LENGTH_STEUER_ID) {
             throw new Exceptions\InvalidSteuerIdLength('Steuer-ID must be '.self::LENGTH_STEUER_ID.' digits long. Inputted Steuer-ID has: '.$lengthInput.' digits');
         }
 
@@ -65,11 +64,6 @@ class SteuerId
         }
 
         $this->isRepeatedDigitsConstraintFulfilled();
-    }
-
-    private function removeWhitespaces(): void
-    {
-        $this->input = str_replace(' ', '', trim($this->input));
     }
 
     private function filter(): void
@@ -84,8 +78,8 @@ class SteuerId
 
     private function isRepeatedDigitsConstraintFulfilled(): void
     {
-        $firstTenDigits = substr($this->input, 0, self::LENGTH_STEUER_ID - 1);
-        $countValues = array_count_values(str_split($firstTenDigits));
+        $firstTenDigits = mb_substr($this->input, 0, self::LENGTH_STEUER_ID - 1);
+        $countValues = array_count_values(mb_str_split($firstTenDigits));
 
         $repeatedDigits = array_filter($countValues, static fn (int $item) => $item > 1);
         if (count($repeatedDigits) !== 1) {
