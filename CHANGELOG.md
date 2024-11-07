@@ -2,6 +2,10 @@
 
 All notable changes to `steuer-id` will be documented in this file.
 
+## v1.2.0 - 2024-11-07
+
+- Support and test PHP 8.4
+
 ## v1.1.0 - 2024-07-09
 
 - Adds exception type as error key,
