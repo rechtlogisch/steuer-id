@@ -49,7 +49,7 @@ it('validates kontist steuer-id', function (string $steuerId, bool $expectedResu
 
 it('throws a type error when nothing provided as steuer-id', function () {
     /** @noinspection PhpParamsInspection */
-    new SteuerId(); /** @phpstan-ignore-line */
+    new SteuerId; /** @phpstan-ignore-line */
 })->throws(TypeError::class);
 
 it('throws a type error when null provided as steuer-id', function () {
