@@ -8,7 +8,7 @@
 
 > Validates the German Tax-ID (Steuerliche Identifikationsnummer)
 
-Based on the [official ELSTER documentation](https://download.elster.de/download/schnittstellen/Pruefung_der_Steuer_und_Steueridentifikatsnummer.pdf) (chapter: 2; as of 2024-09-03).
+Based on the [official ELSTER documentation](https://download.elster.de/download/schnittstellen/Pruefung_der_Steuer_und_Steueridentifikatsnummer.pdf) (chapter: 2; as of 2024-11-07).
 
 > [!NOTE]
 > This package validates solely the syntax and check digit of the provided input. It does not confirm, that the validated Steuer-ID was assigned to a person. Please contact the [Bundeszentralamt für Steuern](https://www.bzst.de/DE/Privatpersonen/SteuerlicheIdentifikationsnummer/steuerlicheidentifikationsnummer_node.html) in case you are unsure about your Steuer-ID.
