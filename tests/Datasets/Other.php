@@ -1,6 +1,6 @@
 <?php
 
-/** @var array<int, array<string, bool>> $ids */
+/** @var array<array{string, bool}> $ids */
 $ids = [
     ['26954371827', true],
     ['65299970480', false],
