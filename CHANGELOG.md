@@ -2,6 +2,12 @@
 
 All notable changes to `steuer-id` will be documented in this file.
 
+## v1.3.0 - 2025-06-16
+
+- End support PHP 8.1
+
+**Full Changelog**: https://github.com/rechtlogisch/steuer-id/compare/v1.2.0...v1.3.0
+
 ## v1.2.0 - 2024-11-07
 
 - Support and test PHP 8.4
