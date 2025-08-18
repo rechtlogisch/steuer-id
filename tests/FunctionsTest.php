@@ -2,6 +2,10 @@
 
 use Rechtlogisch\SteuerId\Dto\ValidationResult;
 
+beforeEach(function () {
+    putenv('STEUERID_PRODUCTION=false');
+});
+
 it('validates a steuer-id with the global validateSteuerId() function', function () {
     $result = validateSteuerId('02476291358');
 
